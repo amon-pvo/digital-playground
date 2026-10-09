@@ -1,0 +1,1692 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080914">
+<title>王一诺 | DIGITAL PLAYGROUND</title>
+
+<style>
+:root {
+  --bg: #080914;
+  --surface: #111426;
+  --text: #f2f3ff;
+  --muted: #a3a9c3;
+  --purple: #a48aff;
+  --cyan: #69e5d8;
+  --line: rgba(190,193,255,.16);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI","Microsoft YaHei",
+               "PingFang SC",sans-serif;
+}
+
+button { font: inherit; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+
+::selection {
+  background: var(--purple);
+  color: var(--bg);
+}
+
+/* BACKGROUND */
+
+.background-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+  background-image:
+    linear-gradient(#ffffff08 1px,transparent 1px),
+    linear-gradient(90deg,#ffffff08 1px,transparent 1px);
+  background-size: 54px 54px;
+  mask-image: linear-gradient(#000,transparent);
+}
+
+.ambient {
+  position: fixed;
+  z-index: -2;
+  pointer-events: none;
+  top: -180px;
+  left: -160px;
+  width: 560px;
+  height: 560px;
+  border-radius: 50%;
+  background: #7857ef35;
+  filter: blur(110px);
+  animation: breathe 8s ease-in-out infinite alternate;
+}
+
+.ambient.second {
+  top: 45%;
+  left: auto;
+  right: -240px;
+  background: #20c7c02a;
+  animation-delay: -4s;
+}
+
+@keyframes breathe {
+  from { transform: scale(.85) translateY(-20px); }
+  to { transform: scale(1.15) translateY(30px); }
+}
+
+/* NAV */
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 6%;
+  background: #080914bc;
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(18px);
+}
+
+.logo {
+  font: 700 15px Consolas,monospace;
+  letter-spacing: 2px;
+}
+
+.logo span { color: var(--cyan); }
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.nav-links a {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 1px;
+  transition: color .25s;
+}
+
+.nav-links a:hover { color: var(--cyan); }
+
+/* GENERAL */
+
+main { overflow: clip; }
+
+section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 115px 6%;
+}
+
+.eyebrow {
+  color: var(--cyan);
+  font: 12px Consolas,monospace;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.section-heading {
+  margin: 15px 0 20px;
+  font-size: clamp(38px,6vw,72px);
+  letter-spacing: -3px;
+  line-height: 1.08;
+}
+
+.section-description {
+  max-width: 680px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 2;
+}
+
+.gradient-text {
+  background: linear-gradient(
+    110deg,#fff,#c5b2ff 45%,#6de8df 90%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 17px;
+  border: 1px solid var(--line);
+  border-radius: 40px;
+  color: var(--muted);
+  font: 11px Consolas,monospace;
+  letter-spacing: 1px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 12px var(--cyan);
+}
+
+.button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 25px;
+  border: 1px solid var(--purple);
+  border-radius: 12px;
+  background: var(--purple);
+  color: #0b0a19;
+  font-size: 13px;
+  font-weight: 700;
+  transition: transform .25s,box-shadow .25s;
+}
+
+.button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px #a48aff44;
+}
+
+.button.secondary {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--line);
+}
+
+.button:disabled {
+  opacity: .45;
+  cursor: default;
+}
+
+/* HERO */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 155px;
+  padding-bottom: 110px;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero h1 {
+  margin: 28px 0;
+  font-size: clamp(65px,12vw,160px);
+  line-height: .88;
+  letter-spacing: -.085em;
+  font-weight: 900;
+}
+
+.hero h1 span { display: block; }
+.hero h1 .world { padding-right: .12em; }
+
+.hero-orb {
+  position: absolute;
+  top: 18%;
+  right: 7%;
+  width: clamp(170px,27vw,350px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: .72;
+  background: radial-gradient(
+    circle at 28% 25%,
+    #ffffffd0,
+    #d5b9ff 12%,
+    #8563e7 37%,
+    #273a7b 65%,
+    #07102b 85%
+  );
+  box-shadow:
+    0 0 80px #795ce74a,
+    inset -20px -20px 50px #0007;
+  animation: float 7s ease-in-out infinite;
+}
+
+.hero-orb::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  border: 1px solid #a48aff55;
+  border-radius: 50%;
+  transform: rotateX(65deg) rotate(-25deg);
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0) rotate(-6deg); }
+  50% { transform: translateY(-28px) rotate(7deg); }
+}
+
+/* NEW: PERSONAL IDENTITY */
+
+.hero-identity {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  max-width: 750px;
+  margin-top: 30px;
+  padding: 28px 34px;
+  border: 1px solid #a48aff4a;
+  border-radius: 22px;
+  background: linear-gradient(
+    125deg,
+    #171a32db,
+    #0e1122d9
+  );
+  backdrop-filter: blur(16px);
+  box-shadow: 0 22px 65px #0004;
+  overflow: visible;
+}
+
+.identity-info { min-width: 0; }
+
+.identity-label {
+  margin: 0 0 12px;
+  color: var(--cyan);
+  font: 11px Consolas,monospace;
+  letter-spacing: 2px;
+}
+
+.identity-name {
+  margin: 0;
+  font-size: clamp(42px,5vw,68px);
+  font-weight: 850;
+  line-height: 1.15;
+  letter-spacing: 2px;
+}
+
+.identity-name span { color: var(--cyan); }
+
+.identity-english {
+  margin: 9px 0 22px;
+  color: var(--purple);
+  font: 12px Consolas,monospace;
+  letter-spacing: 4px;
+}
+
+.identity-school {
+  margin: 0;
+  color: #c3c8de;
+  font-size: 14px;
+  line-height: 2;
+}
+
+.portrait-frame {
+  position: relative;
+  flex: 0 0 170px;
+  width: 170px;
+  aspect-ratio: 3 / 4;
+  padding: 6px;
+  border: 1px solid #a48affaa;
+  border-radius: 12px;
+  background: #171a30;
+  transform: rotate(5deg);
+  box-shadow: 0 20px 50px #0009;
+  transition:
+    transform .4s ease,
+    box-shadow .4s ease;
+}
+
+.portrait-frame:hover {
+  transform: rotate(0deg) scale(1.045);
+  box-shadow: 0 25px 65px #a48aff35;
+}
+
+.portrait-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 7px;
+}
+
+.portrait-stamp {
+  position: absolute;
+  bottom: -15px;
+  right: -13px;
+  padding: 9px 13px;
+  border: 1px solid #69e5d877;
+  border-radius: 6px;
+  background: #0d1425;
+  color: var(--cyan);
+  font: 10px Consolas,monospace;
+  letter-spacing: 1px;
+  transform: rotate(-5deg);
+}
+
+.hero-intro {
+  max-width: 630px;
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 2;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 42px;
+  left: 6%;
+  color: var(--muted);
+  font: 11px Consolas,monospace;
+  letter-spacing: 2px;
+}
+
+/* ABOUT */
+
+.about-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 45px;
+  margin-top: 50px;
+}
+
+.about-statement {
+  font-size: clamp(23px,3.2vw,40px);
+  line-height: 1.5;
+  font-weight: 650;
+  letter-spacing: -1px;
+}
+
+.about-statement em {
+  color: var(--purple);
+  font-style: normal;
+}
+
+.terminal {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #0d1020;
+  box-shadow: 0 25px 80px #0005;
+}
+
+.terminal-top {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 15px 18px;
+  border-bottom: 1px solid var(--line);
+  background: #181b31;
+}
+
+.terminal-top i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #f48d9a;
+}
+
+.terminal-top i:nth-child(2) { background: #f0ce80; }
+.terminal-top i:nth-child(3) { background: #7bd6b0; }
+
+.terminal-title {
+  margin-left: auto;
+  color: #9298b3;
+  font: 11px Consolas,monospace;
+}
+
+.terminal-body {
+  padding: 25px;
+  font: 13px/2 Consolas,monospace;
+  overflow-wrap: anywhere;
+}
+
+.terminal-body .key { color: var(--purple); }
+.terminal-body .value { color: var(--cyan); }
+.terminal-body .comment { color: #777f9f; }
+.terminal-body .indent { padding-left: 18px; }
+
+/* INTERESTS */
+
+.interest-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 18px;
+  margin-top: 45px;
+}
+
+.interest-card {
+  position: relative;
+  min-height: 310px;
+  padding: 30px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: linear-gradient(145deg,#1a1d38,#0f1223);
+  transition: transform .3s,border-color .3s;
+}
+
+.interest-card:hover {
+  transform: translateY(-8px);
+  border-color: #a48aff77;
+}
+
+.interest-number {
+  color: var(--cyan);
+  font: 12px Consolas,monospace;
+}
+
+.interest-symbol {
+  display: block;
+  margin: 25px 0 20px;
+  font-size: 52px;
+  line-height: 1;
+  color: var(--purple);
+}
+
+.interest-card h3 {
+  margin: 0 0 12px;
+  font-size: 24px;
+}
+
+.interest-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.interest-card::after {
+  content: "";
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  right: -85px;
+  bottom: -85px;
+  border-radius: 50%;
+  background: #a48aff1c;
+  filter: blur(25px);
+}
+
+/* JOURNEY */
+
+.journey {
+  margin-top: 50px;
+  padding-left: 38px;
+  border-left: 1px solid #a48aff55;
+}
+
+.journey-item {
+  position: relative;
+  margin-bottom: 24px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #111426d9;
+  overflow: visible;
+}
+
+.journey-item::before {
+  content: "";
+  position: absolute;
+  left: -45px;
+  top: 30px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--purple);
+  box-shadow: 0 0 20px #a48aff88;
+}
+
+.journey-item summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 25px;
+}
+
+.journey-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.journey-meta {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--cyan);
+  font: 11px Consolas,monospace;
+  letter-spacing: 2px;
+}
+
+.journey-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.journey-title::after {
+  content: "+";
+  color: var(--purple);
+  font-size: 25px;
+}
+
+.journey-item[open] .journey-title::after {
+  content: "−";
+}
+
+.journey-content {
+  padding: 0 25px 25px;
+  color: var(--muted);
+  line-height: 2;
+  font-size: 14px;
+}
+
+.journey-content p { margin: 0 0 14px; }
+
+.motivation {
+  margin-top: 40px;
+  padding: 35px;
+  border: 1px solid #a48aff55;
+  border-radius: 22px;
+  background:
+    radial-gradient(
+      circle at top right,
+      #a48aff22,
+      transparent 50%
+    ),
+    #111426;
+}
+
+.motivation h3 {
+  margin: 0 0 15px;
+  font-size: 24px;
+}
+
+.motivation p:last-child {
+  max-width: 850px;
+  margin: 0;
+  color: var(--muted);
+  line-height: 2;
+  font-size: 14px;
+}
+
+/* PHOTOGRAPHY */
+
+.photo-section { max-width: 1500px; }
+
+.archive-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 35px;
+}
+
+.archive-status {
+  color: var(--muted);
+  font: 11px Consolas,monospace;
+  letter-spacing: 1px;
+}
+
+.scatter-stage {
+  position: relative;
+  height: 920px;
+  margin-top: 25px;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background:
+    radial-gradient(
+      ellipse at 50% 48%,
+      #28204765,
+      transparent 60%
+    ),
+    linear-gradient(145deg,#0d1020,#111327);
+}
+
+.scatter-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(#ffffff19 1px,transparent 1px);
+  background-size: 24px 24px;
+}
+
+.scatter-photo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--photo-width);
+  padding: 6px 6px 22px;
+  border: 0;
+  border-radius: 3px;
+  background: #f5f1e8;
+  box-shadow: 0 12px 30px #0008;
+  cursor: pointer;
+  transform:
+    translate(-50%,-50%)
+    rotate(var(--start-rotation));
+  transition:
+    transform 1.25s cubic-bezier(.16,.8,.22,1),
+    box-shadow .25s;
+  transition-delay: 0s;
+  will-change: transform;
+}
+
+.scatter-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 245px;
+  object-fit: contain;
+  background: #27283e;
+  pointer-events: none;
+}
+
+.photo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: var(--placeholder-height);
+  color: #ffffffaa;
+  background: var(--placeholder-color);
+  font: 18px Consolas,monospace;
+  pointer-events: none;
+}
+
+.photo-placeholder[hidden] { display: none; }
+
+.photo-caption {
+  display: block;
+  margin-top: 7px;
+  color: #41404b;
+  font: 9px Consolas,monospace;
+  text-align: center;
+  letter-spacing: 1px;
+  pointer-events: none;
+}
+
+.scatter-stage.open .scatter-photo {
+  transform:
+    translate(
+      calc(-50% + var(--scatter-x)),
+      calc(-50% + var(--scatter-y))
+    )
+    rotate(var(--end-rotation));
+  transition-delay: var(--delay);
+}
+
+.scatter-stage.open .scatter-photo:hover,
+.scatter-stage.open .scatter-photo:focus-visible {
+  z-index: 100 !important;
+  box-shadow: 0 25px 65px #000c;
+}
+
+.stage-message {
+  position: absolute;
+  bottom: 25px;
+  left: 0;
+  right: 0;
+  color: #ffffff55;
+  font: 11px Consolas,monospace;
+  letter-spacing: 3px;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* FULLSCREEN VIEWER */
+
+.photo-viewer[hidden] { display: none; }
+
+.photo-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 65px 20px 30px;
+  background: #050611f2;
+  backdrop-filter: blur(18px);
+}
+
+.viewer-image {
+  display: block;
+  max-width: 92vw;
+  max-height: 84vh;
+  object-fit: contain;
+  box-shadow: 0 25px 80px #000b;
+}
+
+.viewer-close {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  padding: 5px 12px;
+  border: 0;
+  background: transparent;
+  color: white;
+  font-size: 40px;
+}
+
+/* FOOTER */
+
+footer {
+  padding: 55px 6%;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+
+.footer-title {
+  margin-bottom: 15px;
+  font-size: clamp(30px,6vw,65px);
+  font-weight: 900;
+  letter-spacing: -3px;
+}
+
+.footer-caption {
+  color: var(--muted);
+  font: 12px Consolas,monospace;
+  letter-spacing: 2px;
+}
+
+/* SCROLL ANIMATION */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity .8s ease,transform .8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* MOBILE */
+
+@media(max-width:900px) {
+  .about-layout { grid-template-columns: 1fr; }
+  .interest-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+  .hero-orb {
+    right: -50px;
+    opacity: .35;
+  }
+}
+
+@media(max-width:600px) {
+  nav { padding: 17px 5%; }
+  .nav-links { gap: 12px; }
+  .nav-links a { font-size: 10px; }
+
+  section { padding: 85px 5%; }
+
+  .hero {
+    min-height: 100vh;
+    padding-top: 140px;
+    padding-bottom: 110px;
+  }
+
+  .hero h1 {
+    font-size: clamp(60px,15vw,95px);
+  }
+
+  .hero-identity {
+    gap: 15px;
+    padding: 20px;
+  }
+
+  .identity-name {
+    font-size: clamp(32px,8vw,45px);
+  }
+
+  .identity-english {
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
+
+  .identity-school { font-size: 11px; }
+
+  .portrait-frame {
+    flex-basis: 105px;
+    width: 105px;
+  }
+
+  .portrait-stamp {
+    font-size: 8px;
+    padding: 6px 8px;
+  }
+
+  .interest-grid { grid-template-columns: 1fr; }
+  .interest-card { min-height: 240px; }
+
+  .journey { padding-left: 22px; }
+  .journey-item::before { left: -29px; }
+
+  .scatter-stage { height: 1050px; }
+  .scatter-photo img { max-height: 160px; }
+
+  .motivation { padding: 25px; }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background-grid"></div>
+<div class="ambient"></div>
+<div class="ambient second"></div>
+
+<nav>
+  <a class="logo" href="#home">
+    DIGITAL<span>.</span>PLAYGROUND
+  </a>
+
+  <div class="nav-links">
+    <a href="#about">ABOUT</a>
+    <a href="#interests">EXPLORE</a>
+    <a href="#journey">JOURNEY</a>
+    <a href="#gallery">GALLERY</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- 00 / HOME -->
+
+<section id="home" class="hero">
+
+  <div class="hero-orb" id="heroOrb"></div>
+
+  <div class="hero-content">
+
+    <div class="pill">
+      <span class="dot"></span>
+      AN EXPERIMENT IN PROGRESS
+    </div>
+
+    <h1>
+      <span>HELLO,</span>
+      <span class="world gradient-text">WORLD.</span>
+    </h1>
+
+    <p class="eyebrow">
+      WELCOME TO MY DIGITAL PLAYGROUND
+    </p>
+
+    <!-- PERSONAL INFORMATION -->
+
+    <div class="hero-identity">
+
+      <div class="identity-info">
+
+        <p class="identity-label">
+          DESIGNED & BUILT BY
+        </p>
+
+        <h2 class="identity-name">
+          王一诺<span>.</span>
+        </h2>
+
+        <p class="identity-english">
+          WANG YINUO
+        </p>
+
+        <p class="identity-school">
+          大连海事大学<br>
+          思克莱德海事工程学院 · 2026级<br>
+          船舶与海洋工程专业
+        </p>
+
+      </div>
+
+      <div class="portrait-frame">
+        <img src="portrait.jpg"
+             alt="王一诺的个人照片">
+        <span class="portrait-stamp">
+          CREATOR / 2026
+        </span>
+      </div>
+
+    </div>
+
+    <p class="hero-intro">
+      一个关于技术、摄影、创造力与好奇心的个人实验空间。
+      我正在学习如何将想法变成真实作品，
+      也期待探索数字技术与工程设计之间的更多可能。
+    </p>
+
+    <div class="hero-actions">
+      <a class="button" href="#interests">
+        EXPLORE MY WORLD ↗
+      </a>
+
+      <a class="button secondary" href="#gallery">
+        VIEW MY PHOTOGRAPHY ↗
+      </a>
+    </div>
+
+  </div>
+
+  <div class="scroll-hint">
+    ↓ SCROLL TO EXPLORE
+  </div>
+
+</section>
+
+<!-- 01 / ABOUT -->
+
+<section id="about" class="reveal">
+
+  <p class="eyebrow">01 / WHO AM I?</p>
+
+  <h2 class="section-heading">
+    Beyond the <span class="gradient-text">Labels.</span>
+  </h2>
+
+  <div class="about-layout">
+
+    <div>
+
+      <p class="about-statement">
+        Curious about <em>technology.</em><br>
+        Inspired by <em>visuals.</em><br>
+        Driven by <em>exploration.</em>
+      </p>
+
+      <p class="section-description">
+        我是大连海事大学思克莱德海事工程学院
+        2026级船舶与海洋工程专业学生王一诺。
+        对计算机技术、数字化设计、
+        人工智能应用及视觉创作抱有兴趣。
+        目前正在从基础开始学习网页开发，
+        并尝试通过个人网站把技术学习与创意表达结合起来。
+      </p>
+
+    </div>
+
+    <div class="terminal">
+
+      <div class="terminal-top">
+        <i></i><i></i><i></i>
+        <span class="terminal-title">profile.js</span>
+      </div>
+
+      <div class="terminal-body">
+
+        <div class="comment">
+          // A work in progress
+        </div>
+
+        <div>
+          <span class="key">const</span>
+          explorer = {
+        </div>
+
+        <div class="indent">
+          name:
+          <span class="value">"Wang Yinuo"</span>,
+        </div>
+
+        <div class="indent">
+          major:
+          <span class="value">"Naval Architecture"</span>,
+        </div>
+
+        <div class="indent">
+          learning:
+          <span class="value">
+            ["HTML", "CSS", "Web Design"]
+          </span>,
+        </div>
+
+        <div class="indent">
+          interests:
+          <span class="value">
+            ["Photography", "Blender", "AI"]
+          </span>,
+        </div>
+
+        <div class="indent">
+          mindset:
+          <span class="value">"Stay curious."</span>
+        </div>
+
+        <div>};</div>
+
+        <br>
+
+        <div class="comment">
+          // More projects coming soon...
+        </div>
+
+        <div>
+          <span class="value">▌</span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- 02 / INTERESTS -->
+
+<section id="interests" class="reveal">
+
+  <p class="eyebrow">02 / CREATIVE UNIVERSE</p>
+
+  <h2 class="section-heading">
+    Things That <span class="gradient-text">Spark.</span>
+  </h2>
+
+  <p class="section-description">
+    不同领域的兴趣并不是互相独立的。
+    对我而言，编程、摄影、数字设计与心理学，
+    都提供了观察世界、理解问题和表达想法的不同方式。
+  </p>
+
+  <div class="interest-grid">
+
+    <article class="interest-card">
+      <span class="interest-number">001 / CODING</span>
+      <span class="interest-symbol">&lt;/&gt;</span>
+      <h3>Creative Coding</h3>
+      <p>
+        使用 Visual Studio Code 学习 HTML、
+        CSS 与基础网页设计，
+        并以这个个人网站作为持续迭代的实践项目。
+      </p>
+    </article>
+
+    <article class="interest-card">
+      <span class="interest-number">002 / VISUAL</span>
+      <span class="interest-symbol">◎</span>
+      <h3>Photography</h3>
+      <p>
+        喜欢拍摄风景、建筑与城市街景，
+        关注构图、光线、色彩以及空间关系，
+        尝试用镜头记录不同的视觉细节。
+      </p>
+    </article>
+
+    <article class="interest-card">
+      <span class="interest-number">003 / FUTURE</span>
+      <span class="interest-symbol">✧</span>
+      <h3>Digital Frontiers</h3>
+      <p>
+        对 Blender、Vibe Coding、
+        三维建模与工程仿真感兴趣，
+        希望未来进一步探索数字工具在工程领域的应用。
+      </p>
+    </article>
+
+  </div>
+
+</section>
+
+<!-- 03 / JOURNEY -->
+
+<section id="journey" class="reveal">
+
+  <p class="eyebrow">03 / MY JOURNEY</p>
+
+  <h2 class="section-heading">
+    The Story <span class="gradient-text">So Far.</span>
+  </h2>
+
+  <p class="section-description">
+    不只是技能清单，也是我从组织活动、
+    进行知识分享，到探索技术与创意实践的过程。
+    点击下方卡片可以展开具体经历。
+  </p>
+
+  <div class="journey">
+
+    <details class="journey-item" open>
+      <summary>
+        <span class="journey-meta">
+          CURRENT / WEB DEVELOPMENT
+        </span>
+        <span class="journey-title">
+          从零开始搭建个人网站
+        </span>
+      </summary>
+
+      <div class="journey-content">
+        <p>
+          目前正在自主学习 Web 前端开发基础，
+          使用 Visual Studio Code 作为主要代码编辑工具，
+          逐步接触 HTML 文档结构、
+          网页布局与基础样式设计。
+        </p>
+        <p>
+          通过代码编写、页面预览与反复调整，
+          熟悉网页开发的基本流程，
+          并尝试把所学知识应用到个人网站中。
+          这个网站本身，也是我正在持续完善的实践作品。
+        </p>
+      </div>
+    </details>
+
+    <details class="journey-item">
+      <summary>
+        <span class="journey-meta">
+          LONG-TERM / VISUAL PRACTICE
+        </span>
+        <span class="journey-title">
+          用摄影观察城市与空间
+        </span>
+      </summary>
+
+      <div class="journey-content">
+        <p>
+          摄影是我长期保持的兴趣之一，
+          主要拍摄风景、建筑和城市街景。
+          在日常拍摄中，我关注画面构图、
+          光线运用、色彩搭配与视觉表达。
+        </p>
+        <p>
+          我尤其喜欢观察建筑结构、
+          空间关系和城市环境中的视觉细节，
+          并尝试不同的拍摄角度。
+          摄影也逐渐激发了我对数字内容创作、
+          视觉设计和三维表达的兴趣。
+        </p>
+      </div>
+    </details>
+
+    <details class="journey-item">
+      <summary>
+        <span class="journey-meta">
+          HIGH SCHOOL / STUDENT LEADERSHIP
+        </span>
+        <span class="journey-title">
+          心理社组织与心理学科普
+        </span>
+      </summary>
+
+      <div class="journey-content">
+        <p>
+          高中期间担任班级心理委员及校级心理社社长，
+          参与社团组织、沟通协调与活动开展。
+        </p>
+        <p>
+          担任心理社社长期间，
+          曾组织开展多节心理学知识科普课程，
+          围绕心理学与神经科学相关知识进行主题分享。
+        </p>
+        <p>
+          例如，以杏仁核在情绪加工中的作用为切入点，
+          探讨大脑相关机制与日常情绪、
+          行为表现之间的联系，
+          尝试将相对专业的理论知识转化为
+          贴近学生生活、易于理解的科普内容。
+        </p>
+        <p>
+          这些经历锻炼了我的资料收集、
+          知识整理、活动组织与表达能力，
+          也让我感受到跨学科学习的乐趣。
+        </p>
+      </div>
+    </details>
+
+    <details class="journey-item">
+      <summary>
+        <span class="journey-meta">
+          EARLIER / TEAMWORK
+        </span>
+        <span class="journey-title">
+          班级管理与团队协作
+        </span>
+      </summary>
+
+      <div class="journey-content">
+        <p>
+          初中期间曾担任班长，
+          在班级事务中积累了学生工作、
+          沟通协调与责任分工方面的经验。
+        </p>
+        <p>
+          从班级管理到高中社团组织，
+          这些经历逐渐培养了我的责任意识、
+          团队协作能力以及与不同成员沟通的能力。
+        </p>
+      </div>
+    </details>
+
+  </div>
+
+  <div class="motivation">
+    <p class="eyebrow">
+      NEXT CHAPTER / BIM SOCIETY
+    </p>
+
+    <h3>Learning. Building. Contributing.</h3>
+
+    <p>
+      进入大学后，我希望在扎实掌握专业基础知识的同时，
+      积极拓展课堂之外的知识领域。
+      期待加入 BIM 学社，
+      优先在编程仿真方向从基础开始深入学习，
+      并了解和参与学科竞赛、
+      科研实践与技术交流活动。
+      同时，我也愿意发挥摄影、
+      视觉表达和学生组织方面的经验，
+      参与宣传美工、活动记录与团队协作。
+      希望在实践中积累经验，
+      与志同道合的同学共同成长。
+    </p>
+  </div>
+
+</section>
+
+<!-- 04 / PHOTOGRAPHY -->
+
+<section id="gallery" class="photo-section reveal">
+
+  <p class="eyebrow">04 / VISUAL DIARY</p>
+
+  <h2 class="section-heading">
+    Scattered <span class="gradient-text">Memories.</span>
+  </h2>
+
+  <p class="section-description">
+    城市、建筑、风景，以及日常生活中值得记录的片段。
+    这里不是整齐排列的相册，
+    而是一叠可以被打乱、展开和重新组合的视觉记忆。
+  </p>
+
+  <div class="archive-controls">
+
+    <button class="button"
+            id="scatterToggle"
+            type="button"
+            aria-expanded="false">
+      ✦ SPREAD THE MEMORIES
+    </button>
+
+    <button class="button secondary"
+            id="reshuffleButton"
+            type="button"
+            disabled>
+      ↻ RESHUFFLE
+    </button>
+
+    <span class="archive-status" id="archiveStatus">
+      30 SHOTS / READY TO EXPLORE
+    </span>
+
+  </div>
+
+  <div class="scatter-stage"
+       id="scatterStage"
+       aria-label="30张交互式摄影作品">
+
+    <div class="stage-message">
+      CLICK ABOVE TO SCATTER THE ARCHIVE
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+<!-- PHOTO VIEWER -->
+
+<div class="photo-viewer"
+     id="photoViewer"
+     role="dialog"
+     aria-modal="true"
+     aria-label="摄影作品预览"
+     hidden>
+
+  <button class="viewer-close"
+          id="viewerClose"
+          type="button"
+          aria-label="关闭照片预览">
+    ×
+  </button>
+
+  <img class="viewer-image"
+       id="viewerImage"
+       alt="放大的摄影作品">
+
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+  <div class="footer-title gradient-text">
+    KEEP EXPLORING.
+  </div>
+
+  <p class="footer-caption">
+    DESIGNED & BUILT BY WANG YINUO · 2026
+  </p>
+</footer>
+
+<script>
+/* SCROLL REVEAL */
+
+const revealElements =
+  document.querySelectorAll(".reveal");
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: .08 }
+);
+
+revealElements.forEach((element) => {
+  observer.observe(element);
+});
+
+/* HERO MOUSE EFFECT */
+
+const heroOrb = document.getElementById("heroOrb");
+
+if (
+  window.matchMedia("(pointer: fine)").matches &&
+  !window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches
+) {
+  document.addEventListener("mousemove", (event) => {
+    const x = event.clientX / innerWidth - .5;
+    const y = event.clientY / innerHeight - .5;
+
+    heroOrb.style.marginLeft = `${x * 25}px`;
+    heroOrb.style.marginTop = `${y * 25}px`;
+  });
+}
+
+/* PHOTO ARCHIVE */
+
+const stage = document.getElementById("scatterStage");
+const scatterToggle =
+  document.getElementById("scatterToggle");
+const reshuffleButton =
+  document.getElementById("reshuffleButton");
+const archiveStatus =
+  document.getElementById("archiveStatus");
+
+const viewer = document.getElementById("photoViewer");
+const viewerImage = document.getElementById("viewerImage");
+const viewerClose = document.getElementById("viewerClose");
+
+const photoCount = 30;
+const photoCards = [];
+
+let scatterVersion = 0;
+let lastFocusedCard = null;
+
+function pseudoRandom(seed) {
+  const value = Math.sin(seed * 127.1) * 43758.5453;
+  return value - Math.floor(value);
+}
+
+/* CREATE 30 PHOTOS */
+
+for (let i = 1; i <= photoCount; i++) {
+  const number = String(i).padStart(2, "0");
+
+  const card = document.createElement("button");
+  card.type = "button";
+  card.className = "scatter-photo";
+  card.setAttribute(
+    "aria-label",
+    `查看摄影作品 ${i}`
+  );
+
+  const img = document.createElement("img");
+
+  // Your photos: photos/p1.jpg ... photos/p30.jpg
+  img.src = `photos/p${i}.jpg`;
+  img.alt = `摄影作品 ${i}`;
+  img.loading = "lazy";
+
+  const placeholder = document.createElement("span");
+  placeholder.className = "photo-placeholder";
+  placeholder.textContent = number;
+
+  const caption = document.createElement("span");
+  caption.className = "photo-caption";
+  caption.textContent = `MEMORY / ${number}`;
+
+  const colors = [
+    "#5a638b",
+    "#607d80",
+    "#98718c",
+    "#82799f",
+    "#8b8272",
+    "#3f6477"
+  ];
+
+  card.style.setProperty(
+    "--placeholder-color",
+    colors[(i - 1) % colors.length]
+  );
+
+  card.style.setProperty(
+    "--placeholder-height",
+    `${95 + (i * 29) % 85}px`
+  );
+
+  img.addEventListener("load", () => {
+    placeholder.remove();
+  });
+
+  img.addEventListener("error", () => {
+    img.remove();
+  });
+
+  card.append(img, placeholder, caption);
+  stage.appendChild(card);
+  photoCards.push(card);
+
+  card.addEventListener("click", () => {
+    if (!stage.classList.contains("open")) return;
+    if (!card.querySelector("img")) return;
+
+    lastFocusedCard = card;
+
+    // Fullscreen image
+    viewerImage.src = `photos/p${i}.jpg`;
+    viewerImage.alt = `摄影作品 ${i}`;
+    viewer.hidden = false;
+    viewerClose.focus();
+  });
+}
+
+/* SCATTER LAYOUT */
+
+function arrangePhotos() {
+  const width = stage.clientWidth;
+  const height = stage.clientHeight;
+  const mobile = width < 600;
+
+  photoCards.forEach((card, index) => {
+    const seed = index + scatterVersion * 97;
+
+    const angle =
+      index * 2.399963 +
+      pseudoRandom(seed + 3) * .45;
+
+    const radius = Math.sqrt(
+      (index + .6) / photoCount
+    );
+
+    const jitterX =
+      (pseudoRandom(seed + 12) - .5) * .17;
+
+    const jitterY =
+      (pseudoRandom(seed + 25) - .5) * .17;
+
+    const x =
+      (Math.cos(angle) * radius + jitterX) *
+      width * (mobile ? .32 : .39);
+
+    const y =
+      (Math.sin(angle) * radius + jitterY) *
+      height * .39;
+
+    const photoWidth = mobile
+      ? 72 + pseudoRandom(seed + 41) * 43
+      : 120 + pseudoRandom(seed + 41) * 92;
+
+    const startRotation =
+      -15 + pseudoRandom(seed + 51) * 30;
+
+    const endRotation =
+      -38 + pseudoRandom(seed + 61) * 76;
+
+    const delay =
+      pseudoRandom(seed + 71) * 180;
+
+    card.style.setProperty(
+      "--photo-width",
+      `${photoWidth}px`
+    );
+
+    card.style.setProperty(
+      "--scatter-x",
+      `${x}px`
+    );
+
+    card.style.setProperty(
+      "--scatter-y",
+      `${y}px`
+    );
+
+    card.style.setProperty(
+      "--start-rotation",
+      `${startRotation}deg`
+    );
+
+    card.style.setProperty(
+      "--end-rotation",
+      `${endRotation}deg`
+    );
+
+    card.style.setProperty(
+      "--delay",
+      `${delay}ms`
+    );
+
+    card.style.zIndex = index + 1;
+  });
+}
+
+arrangePhotos();
+window.addEventListener("resize", arrangePhotos);
+
+/* SPREAD / GATHER */
+
+scatterToggle.addEventListener("click", () => {
+  const isOpen = stage.classList.toggle("open");
+
+  scatterToggle.setAttribute(
+    "aria-expanded",
+    String(isOpen)
+  );
+
+  scatterToggle.textContent = isOpen
+    ? "✦ GATHER THE MEMORIES"
+    : "✦ SPREAD THE MEMORIES";
+
+  reshuffleButton.disabled = !isOpen;
+
+  archiveStatus.textContent = isOpen
+    ? "30 SHOTS / SCATTERED"
+    : "30 SHOTS / READY TO EXPLORE";
+});
+
+/* RESHUFFLE */
+
+reshuffleButton.addEventListener("click", () => {
+  scatterVersion++;
+  arrangePhotos();
+
+  archiveStatus.textContent =
+    "30 SHOTS / NEW ARRANGEMENT";
+});
+
+/* IMAGE VIEWER */
+
+function closeViewer() {
+  viewer.hidden = true;
+  viewerImage.removeAttribute("src");
+
+  if (lastFocusedCard) {
+    lastFocusedCard.focus();
+  }
+}
+
+viewerClose.addEventListener("click", closeViewer);
+
+viewer.addEventListener("click", (event) => {
+  if (event.target === viewer) {
+    closeViewer();
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !viewer.hidden) {
+    closeViewer();
+  }
+
+  if (event.key === "Tab" && !viewer.hidden) {
+    event.preventDefault();
+    viewerClose.focus();
+  }
+});
+</script>
+
+</body>
+</html>
